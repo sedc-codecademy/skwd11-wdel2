@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Woman Shirt",
+    "price": 600
+  },
+  {
+    "id": 2,
+    "name": "Sony 5",
+    "price": 30000
+  },
+  {
+    "id": 1695320222715,
+    "name": "Kindle",
+    "price": 3000
+  },
+  {
+    "id": 1695320314045,
+    "name": "Lubenica",
+    "price": 100
+  },
+  {
+    "id": 1695321146782,
+    "name": "Bread",
+    "price": 35
+  },
+  {
+    "id": 1695321240885,
+    "name": "Bananas",
+    "price": 70
+  }
+]
