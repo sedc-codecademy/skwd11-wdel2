@@ -65,6 +65,29 @@ router.post("/products", (request, response) => {
   response.status(201).send({ message: "Product has been created." });
 });
 
+//localhost:3000/products/filter?priceGreatedThen=100
+router.get("/products/filter", (request, response) => {
+  /**
+   * 1. check if there is path parametaer
+   *   YES => executer logic for that path param
+   *   NO => next() => so i can continue with the rest of the routes
+   * 2. check if there is query parameter
+   *   YES => execute logic for that query param
+   *   NO => next() ...
+   */
+  const queryParams = request.query;
+  console.log(queryParams);
+
+  const valueOfPrice = queryParams.priceGreaterThen;
+  const products = JSON.parse(readFile("./db/products.json"));
+
+  const filteredProducts = products.filter(
+    (product) => product.price >= Number(valueOfPrice)
+  );
+
+  response.send(filteredProducts);
+});
+
 // PATH PARAMETERS
 router.get("/products/:id", (request, response) => {
   const pathParams = request.params;
