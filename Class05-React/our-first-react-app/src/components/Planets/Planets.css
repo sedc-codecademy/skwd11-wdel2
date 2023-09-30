@@ -1,0 +1,11 @@
+.planetsContainer {
+  list-style-type: none;
+  background-color: bisque;
+  display: flex;
+  justify-content: space-around;
+
+  & > li {
+    padding: 20px;
+    border: 1px solid black
+  }
+}
