@@ -10,6 +10,10 @@ import { useState } from "react";
 function App() {
   const [tasks, setTasks] = useState([]);
 
+  const handleAddTask = (task) => {
+    setTasks([...tasks, task]);
+  };
+
   return (
     <>
       <BrowserRouter>
@@ -17,14 +21,17 @@ function App() {
 
         <Routes>
           {/* http://localhost:5173/ */}
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home taskList={tasks} />} />
           {/* http://localhost:5173/about */}
           <Route path="/about" element={<About />} />
           {/* http://localhost:5173/contact */}
           <Route path="/contact" element={<Contact />} />
           {/* http://localhost:5173/counter */}
           <Route path="/counter" element={<Counter />} />
-          <Route path="/create-task" element={<CreateTask />} />
+          <Route
+            path="/create-task"
+            element={<CreateTask handleAddTask={handleAddTask} />}
+          />
 
           {/* wildcard */}
           <Route

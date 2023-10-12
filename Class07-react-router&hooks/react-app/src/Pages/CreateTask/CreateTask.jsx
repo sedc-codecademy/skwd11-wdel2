@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const CreateTask = () => {
+export const CreateTask = (props) => {
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [taskNameError, setTaskNameError] = useState(undefined);
@@ -60,7 +60,21 @@ export const CreateTask = () => {
         <br />
         <br />
 
-        <button>Create Task</button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+
+            const newlyCreatedTask = {
+              id: Date.now(),
+              name: taskName,
+              description: taskDescription,
+            };
+
+            props.handleAddTask(newlyCreatedTask);
+          }}
+        >
+          Create Task
+        </button>
       </form>
     </div>
   );
