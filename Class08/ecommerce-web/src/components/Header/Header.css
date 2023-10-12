@@ -1,0 +1,28 @@
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  padding: 5px 20px;
+  background-color: #004954;
+}
+
+.navigation h3 {
+  color: white;
+}
+
+.navLinks {
+  list-style: none;
+  display: flex;
+  width: 40%;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.navLinks li {
+  color: white;
+}
+
+.navLinks a {
+  text-decoration: none;
+}
