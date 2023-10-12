@@ -1,0 +1,21 @@
+.productCard img {
+  width: 200px;
+}
+
+.productCard {
+  background-color: #EEEEFF;
+  color: #004954;
+  border-radius: 5px;
+  width: 30%;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  transition: box-shadow 0.3s ease;
+}
+
+.productCard:hover {
+  box-shadow: 0px 0px 15px #D2FD78;
+}

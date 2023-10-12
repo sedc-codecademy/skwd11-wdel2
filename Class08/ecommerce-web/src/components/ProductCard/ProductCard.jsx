@@ -1,13 +1,15 @@
-export const ProductCard = ({ product }) => {
+import "./ProductCard.css";
+
+export const ProductCard = ({ singleProduct }) => {
   return (
     <div className="productCard">
       <div className="productDetails">
-        <h2>{product.name}</h2>
-        <p>{product.description}</p>
-        <p>Price: {product.price}</p>
+        <h2>{singleProduct.name}</h2>
+        <p>{singleProduct.description}</p>
+        <p>Price: {singleProduct.price}</p>
       </div>
 
-      <img src={product.imageUrl} alt={product.name} />
+      <img src={singleProduct.imageUrl} alt={singleProduct.name} />
     </div>
   );
 };
