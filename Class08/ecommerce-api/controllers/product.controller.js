@@ -42,6 +42,7 @@ class ProductsController {
 
     response.status(201).send({
       message: `Product created successfully with id: ${productId}`,
+      id: productId,
     });
   }
 

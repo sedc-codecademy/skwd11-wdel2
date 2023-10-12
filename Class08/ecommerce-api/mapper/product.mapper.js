@@ -5,6 +5,7 @@ export class ProductPropsMapper {
       description: createProductDTO.productDescription,
       price: createProductDTO.productPrice,
       imageUrl: createProductDTO.productImage,
+      category: createProductDTO.productCategory,
     };
   }
 }
