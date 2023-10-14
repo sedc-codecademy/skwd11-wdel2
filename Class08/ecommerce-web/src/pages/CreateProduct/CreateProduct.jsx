@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { categories } from "../../utils/shared/categories.const.js";
+import { GetProductsService } from "../../services/productApiService.js";
 
-export const CreateProduct = () => {
+export const CreateProduct = ({ setProducts, handleSetProductsSecond }) => {
   const [draftProduct, setDraftProduct] = useState({
     productName: "",
     productDescription: "",
@@ -17,17 +19,11 @@ export const CreateProduct = () => {
     });
   };
 
-  const categories = [
-    "Women Clothing",
-    "Men Clothing",
-    "Entertainment",
-    "Techonology",
-    "Books",
-  ];
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // TODO: Instead of creating an literal object, we can have class entity for product
+    // and create new instance of it
     const product = {
       productName: draftProduct.productName,
       productDescription: draftProduct.productDescription,
@@ -38,6 +34,29 @@ export const CreateProduct = () => {
 
     // TODO: Make the api call to save the product in the DB
     console.log("product to be created:", product);
+    try {
+      const id = await GetProductsService.createProduct(product);
+
+      // 1. After we success create the product, use re-fetch method so we can see the up to date
+      // value
+      // const newlyProducts = await GetProductsService.getProducts();
+      // console.log("Newly fetched products:", newlyProducts);
+      // setProducts(newlyProducts);
+
+      // 2. After we success create the product, update the state without refetching, containing the product with the
+      // new value
+
+      handleSetProductsSecond({
+        _id: id,
+        name: product.productName,
+        description: product.productDescription,
+        imageUrl: product.productImage,
+        category: product.productCategory,
+        price: product.productPrice,
+      });
+    } catch (error) {
+      console.log("Error happened");
+    }
   };
 
   return (

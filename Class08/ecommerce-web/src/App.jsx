@@ -11,6 +11,16 @@ import { GetProductsService } from "./services/productApiService.js";
 function App() {
   const [products, setProducts] = useState([]);
 
+  // Solution 1 for refatching
+  const handleSetProducts = (products) => {
+    setProducts(products);
+  };
+
+  // Solution 2 when just updating the state with the product
+  const handleSetProductsSecond = (product) => {
+    setProducts([...products, product]);
+  };
+
   useEffect(() => {
     GetProductsService.getProducts().then((products) => {
       setProducts(products);
@@ -25,7 +35,15 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<Products products={products} />} />
-          <Route path="/create-product" element={<CreateProduct />} />
+          <Route
+            path="/create-product"
+            element={
+              <CreateProduct
+                setProducts={handleSetProducts}
+                handleSetProductsSecond={handleSetProductsSecond}
+              />
+            }
+          />
         </Routes>
       </BrowserRouter>
     </Container>
