@@ -15,10 +15,7 @@ export class GetProductsService {
       body: JSON.stringify(product),
     });
 
-    console.log("RAW RESPONSE:", response);
-
     const result = await response.json();
-
     console.log("RESULT CREATE PRODUCT:", result);
 
     return result.id;

@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { categories } from "../../utils/shared/categories.const.js";
 import { GetProductsService } from "../../services/productApiService.js";
+import TextField from "@mui/material/TextField";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Button from "@mui/material/Button";
+import LinearProgress from "@mui/material/LinearProgress";
+import "./CreateProduct.css";
 
 export const CreateProduct = ({ setProducts, handleSetProductsSecond }) => {
   const [draftProduct, setDraftProduct] = useState({
@@ -10,6 +18,7 @@ export const CreateProduct = ({ setProducts, handleSetProductsSecond }) => {
     productImage: "",
     productCategory: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   // DRY => Do not reapeat yourself
   const onValueChange = (value, propValue) => {
@@ -19,12 +28,24 @@ export const CreateProduct = ({ setProducts, handleSetProductsSecond }) => {
     });
   };
 
+  const clearInputs = () => {
+    setDraftProduct({
+      productName: "",
+      productDescription: "",
+      productPrice: "",
+      productImage: "",
+      productCategory: "",
+    });
+  };
+
   const handleSubmit = async (event) => {
+    if (isLoading) return;
     event.preventDefault();
+    setIsLoading(true);
 
     // TODO: Instead of creating an literal object, we can have class entity for product
     // and create new instance of it
-    const product = {
+    const productRequestBody = {
       productName: draftProduct.productName,
       productDescription: draftProduct.productDescription,
       productPrice: Number(draftProduct.productPrice),
@@ -32,10 +53,8 @@ export const CreateProduct = ({ setProducts, handleSetProductsSecond }) => {
       productCategory: draftProduct.productCategory,
     };
 
-    // TODO: Make the api call to save the product in the DB
-    console.log("product to be created:", product);
     try {
-      const id = await GetProductsService.createProduct(product);
+      const id = await GetProductsService.createProduct(productRequestBody);
 
       // 1. After we success create the product, use re-fetch method so we can see the up to date
       // value
@@ -48,12 +67,15 @@ export const CreateProduct = ({ setProducts, handleSetProductsSecond }) => {
 
       handleSetProductsSecond({
         _id: id,
-        name: product.productName,
-        description: product.productDescription,
-        imageUrl: product.productImage,
-        category: product.productCategory,
-        price: product.productPrice,
+        name: productRequestBody.productName,
+        description: productRequestBody.productDescription,
+        imageUrl: productRequestBody.productImage,
+        category: productRequestBody.productCategory,
+        price: productRequestBody.productPrice,
       });
+
+      clearInputs();
+      setIsLoading(false);
     } catch (error) {
       console.log("Error happened");
     }
@@ -61,35 +83,43 @@ export const CreateProduct = ({ setProducts, handleSetProductsSecond }) => {
 
   return (
     <>
+      {isLoading && <LinearProgress />}
       <form>
         <div className="inputsContainer">
-          <input
-            type="text"
-            placeholder="Product Name"
+          <TextField
+            id="outlined-basic"
+            label="Product name"
+            variant="outlined"
             onChange={(event) =>
               onValueChange(event.target.value, "productName")
             }
             value={draftProduct.productName}
           />
-          <input
-            type="text"
-            placeholder="Product Description"
+
+          <TextField
+            id="outlined-basic"
+            label="Product Description"
+            variant="outlined"
             onChange={(event) =>
               onValueChange(event.target.value, "productDescription")
             }
             value={draftProduct.productDescription}
           />
-          <input
-            type="text"
-            placeholder="Product Price"
+
+          <TextField
+            id="outlined-basic"
+            label="Product Price"
+            variant="outlined"
             onChange={(event) =>
               onValueChange(event.target.value, "productPrice")
             }
             value={draftProduct.productPrice}
           />
-          <input
-            type="text"
-            placeholder="Product Image"
+
+          <TextField
+            id="outlined-basic"
+            label="Product Image"
+            variant="outlined"
             onChange={(event) =>
               onValueChange(event.target.value, "productImage")
             }
@@ -97,25 +127,33 @@ export const CreateProduct = ({ setProducts, handleSetProductsSecond }) => {
           />
         </div>
 
-        <div>
-          <select
-            onChange={(event) =>
-              onValueChange(event.target.value, "productCategory")
-            }
-            value={draftProduct.productCategory}
+        <div className="optionsContainer">
+          <FormControl>
+            <InputLabel id="demo-simple-select-label">Categories</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={draftProduct.productCategory}
+              label="Categories"
+              onChange={(event) =>
+                onValueChange(event.target.value, "productCategory")
+              }
+            >
+              {categories.map((category) => (
+                <MenuItem key={category} value={category}>
+                  {category}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <Button
+            variant="contained"
+            onClick={handleSubmit}
+            disabled={isLoading}
           >
-            <option value={""} disabled>
-              Please select category
-            </option>
-
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-
-          <button onClick={handleSubmit}>Create Product</button>
+            Create Product
+          </Button>
         </div>
       </form>
     </>

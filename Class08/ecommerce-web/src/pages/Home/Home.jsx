@@ -1,4 +1,8 @@
 import "./Home.css";
+import Divider from "@mui/material/Divider";
+import { categories } from "../../utils/shared/categories.const.js";
+import { CategoryContainer } from "./styled/Home.styled";
+import { Category } from "../../components/Category/Category";
 
 export const Home = () => {
   return (
@@ -10,6 +14,13 @@ export const Home = () => {
           to find, order, and track your favorite items.
         </h1>
       </div>
+      <Divider>CATEGORIES</Divider>
+
+      <CategoryContainer>
+        {categories.map((category) => (
+          <Category key={category} name={category} />
+        ))}
+      </CategoryContainer>
     </div>
   );
 };
