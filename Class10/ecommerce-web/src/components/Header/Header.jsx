@@ -1,7 +1,9 @@
 import { Link, NavLink } from "react-router-dom";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Badge from "@mui/material/Badge";
 import "./Header.css";
 
-export const Header = () => {
+export const Header = ({ cartListCount }) => {
   const routes = [
     {
       to: "/",
@@ -18,6 +20,14 @@ export const Header = () => {
     {
       to: "/create-product",
       label: "Create Product",
+    },
+    {
+      to: "/cart",
+      label: (
+        <Badge badgeContent={cartListCount} color="primary">
+          <ShoppingCartIcon />
+        </Badge>
+      ),
     },
   ];
 

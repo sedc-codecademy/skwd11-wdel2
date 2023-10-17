@@ -10,7 +10,7 @@ import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
 import "./CreateProduct.css";
 
-export const CreateProduct = ({ setProducts, handleSetProductsSecond }) => {
+export const CreateProduct = ({ handleSetProductsSecond }) => {
   const [draftProduct, setDraftProduct] = useState({
     productName: "",
     productDescription: "",
@@ -55,15 +55,6 @@ export const CreateProduct = ({ setProducts, handleSetProductsSecond }) => {
 
     try {
       const id = await GetProductsService.createProduct(productRequestBody);
-
-      // 1. After we success create the product, use re-fetch method so we can see the up to date
-      // value
-      // const newlyProducts = await GetProductsService.getProducts();
-      // console.log("Newly fetched products:", newlyProducts);
-      // setProducts(newlyProducts);
-
-      // 2. After we success create the product, update the state without refetching, containing the product with the
-      // new value
 
       handleSetProductsSecond({
         _id: id,

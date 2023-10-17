@@ -20,4 +20,11 @@ export class GetProductsService {
 
     return result.id;
   };
+
+  static getProductDetails = async (productID) => {
+    const response = await fetch(`http://localhost:3000/products/${productID}`);
+    const product = await response.json();
+
+    return product;
+  };
 }

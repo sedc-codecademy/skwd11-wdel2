@@ -12,6 +12,8 @@ export const CategoryWrapper = styled("div")({
   flexDirection: "column",
   color: "#004954",
   transition: "box-shadow 0.3s ease",
+  justifyContent: "space-between",
+  padding: "20px",
   ":hover": {
     boxShadow: "0px 0px 15px #d2fd78",
   },
